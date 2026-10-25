@@ -1,0 +1,1 @@
+const FrameSchedule=Object.freeze({cutoff:Date.parse('2026-11-29T00:00:00-03:00'),phase(now=Date.now()){return now<this.cutoff?'before':'after';},allowed(index,now=Date.now()){return index>=0&&index<7&&(index>=4?now<this.cutoff:now>=this.cutoff);},initial(now=Date.now()){return now<this.cutoff?4:0;}});
