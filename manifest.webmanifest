@@ -1,4 +1,4 @@
 {
  "id":"./","name":"Meu Corre · Corrida Corte","short_name":"Meu Corre","description":"Crie sua foto da Corrida Corte com molduras personalizadas.","lang":"pt-BR","dir":"ltr","start_url":"./","scope":"./","display":"standalone","background_color":"#f6f8fc","theme_color":"#f6f8fc","prefer_related_applications":false,"categories":["photo","sports"],
- "icons":[{"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icons/maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]
+ "icons":[{"src":"icons/runner-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"icons/runner-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icons/runner-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]
 }

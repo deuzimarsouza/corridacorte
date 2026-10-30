@@ -1,5 +1,5 @@
-const CACHE = 'meu-corre-v8-colors';
-const FILES = ['./', 'index.html', 'style.css', 'install.css', 'schedule.js', 'formats.js', 'app.js', 'pwa.js', 'logo.jpg', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'];
+const CACHE = 'meu-corre-v9-logo';
+const FILES = ['./', 'index.html', 'style.css', 'install.css', 'schedule.js', 'formats.js', 'app.js', 'pwa.js', 'logo.jpg', 'manifest.webmanifest', 'icons/runner-192.png', 'icons/runner-512.png', 'icons/runner-maskable-512.png', 'icons/runner-apple-180.png'];
 const URLS = FILES.map(file => new URL(file, self.registration.scope).href);
 const PAGES = ['./', 'index.html'].map(file => new URL(file, self.registration.scope));
 

@@ -18,6 +18,10 @@ O link hospedado pelo projeto segue com acesso privado e exige uma conta autoriz
 
 A instalação depende do navegador e deve ser confirmada pelo usuário. Abrir `index.html` diretamente não permite instalar a PWA. Para testes no computador, sirva a pasta com `python -m http.server 8000` e abra `http://localhost:8000`.
 
+## Identidade visual
+
+O cabeçalho, o ícone da aba e os ícones de instalação usam a imagem do corredor azul fornecida pelo organizador, com proporções preservadas. O ícone adaptável tem uma margem branca para acomodar os recortes do Android. A marca original do evento permanece nas molduras. Se uma instalação existente continuar exibindo o ícone anterior, remova o app e instale novamente pelo site atualizado.
+
 ## Fotos e molduras
 
 Escolha a foto, ajuste o enquadramento, selecione uma moldura e salve em PNG no formato escolhido: 1:1 (1080 × 1080), 3:4 retrato (1080 × 1440) ou 9:16 vertical (1080 × 1920). Ao trocar o formato, o enquadramento é centralizado; ajuste a posição e o zoom novamente se necessário. O nome é opcional. A moldura Meu Pace aceita minutos e segundos (05:30).
