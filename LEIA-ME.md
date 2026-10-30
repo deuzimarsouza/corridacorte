@@ -30,6 +30,10 @@ São 7 molduras. As 3 de pré-evento funcionam até 28/11/2026 às 23h59:59, hor
 
 As fotos são processadas localmente. O app não armazena as fotos entre sessões; salve a imagem antes de fechar ou atualizar. Depois de aparecer **App pronto para usar sem internet neste dispositivo**, a interface e as molduras ficam disponíveis offline. O navegador pode remover o cache para liberar espaço.
 
+## Adesivos
+
+No passo **Finalizar**, escolha a lateral esquerda ou direita e um dos cinco adesivos. Cada lado tem tamanho e altura independentes. Use **Sem adesivo** para retirar apenas o adesivo da lateral selecionada. Eles acompanham a foto salva nos formatos 1:1, 3:4 e 9:16. O botão **Baixar adesivo PNG** salva o adesivo individual com fundo transparente. Os arquivos estão na pasta `stickers/`.
+
 ## Publicar o ZIP
 
 Extraia os arquivos e publique todo o conteúdo, mantendo a pasta `icons`, em uma hospedagem estática HTTPS. Não requer Node.js ou build. Os caminhos relativos também funcionam em subpastas, como no GitHub Pages.
