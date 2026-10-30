@@ -20,7 +20,7 @@ A instalação depende do navegador e deve ser confirmada pelo usuário. Abrir `
 
 ## Fotos e molduras
 
-Escolha a foto, ajuste o enquadramento, selecione uma moldura e salve em PNG 1080 × 1080. O nome é opcional. A moldura Meu Pace aceita minutos e segundos (05:30).
+Escolha a foto, ajuste o enquadramento, selecione uma moldura e salve em PNG no formato escolhido: 1:1 (1080 × 1080), 3:4 retrato (1080 × 1440) ou 9:16 vertical (1080 × 1920). Ao trocar o formato, o enquadramento é centralizado; ajuste a posição e o zoom novamente se necessário. O nome é opcional. A moldura Meu Pace aceita minutos e segundos (05:30).
 
 São 7 molduras. As 3 de pré-evento funcionam até 28/11/2026 às 23h59:59, horário de Brasília. Em 29/11/2026 às 00h, elas são bloqueadas e as 4 de pós-evento são liberadas. A regra usa o relógio do dispositivo, não é uma restrição protegida no servidor.
 

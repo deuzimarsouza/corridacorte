@@ -1,27 +1,31 @@
 const $=id=>document.getElementById(id), canvas=$('canvas'),ctx=canvas.getContext('2d');
-const styles=[{title:'Eu estava lá!',phrase:'EU ESTAVA LÁ!',sub:'CADA PASSO, UMA CONQUISTA.',color:'#123da9',accent:'#84b8ff'},{title:'Meu pace',phrase:'MEU PACE',sub:'MEU RITMO. MINHA CONQUISTA.',color:'#0b243c',accent:'#bdf36c'},{title:'Mais uma conquista',phrase:'EU FUI ALÉM!',sub:'A MELHOR VERSÃO DE MIM.',color:'#36237a',accent:'#c5b4ff'},{title:'Paixão pelo corre',phrase:'VIVENDO O CORRE!',sub:'COLECIONANDO BOAS MEMÓRIAS.',color:'#b63728',accent:'#ffd0a3'},{title:'Eu estarei lá!',phrase:'EU ESTAREI LÁ!',sub:'PRESENÇA CONFIRMADA · 29/11/2026',color:'#1249bd',accent:'#a4dcff'},{title:'Eu vou!',phrase:'EU VOU!',sub:'CONTAGEM REGRESSIVA PARA O MEU CORRE.',color:'#086354',accent:'#c6f478'},{title:'Quem vai sou eu!',phrase:'QUEM VAI SOU EU!',sub:'ENCONTRO MARCADO · 29/11/2026',color:'#922957',accent:'#ffd095'}];
+const styles=[{title:'Eu estava lá!',phrase:'EU ESTAVA LÁ!',sub:'CADA PASSO, UMA CONQUISTA.',color:'#123da9',accent:'#84b8ff'},{title:'Meu pace',phrase:'MEU PACE',sub:'MEU RITMO. MINHA CONQUISTA.',color:'#0b243c',accent:'#bdf36c'},{title:'Mais uma conquista',phrase:'EU FUI ALÉM!',sub:'A MELHOR VERSÃO DE MIM.',color:'#36237a',accent:'#c5b4ff'},{title:'Paixão pelo corre',phrase:'VIVENDO O CORRE!',sub:'COLECIONANDO BOAS MEMÓRIAS.',color:'#b63728',accent:'#ffd0a3'},{title:'Eu estarei lá!',phrase:'EU ESTAREI LÁ!',sub:'PRESENÇA CONFIRMADA · 29/11/2026',color:'#086354',accent:'#c6f478'},{title:'Eu vou!',phrase:'EU VOU!',sub:'CONTAGEM REGRESSIVA PARA O MEU CORRE.',color:'#1249bd',accent:'#a4dcff'},{title:'Quem vai sou eu!',phrase:'QUEM VAI SOU EU!',sub:'ENCONTRO MARCADO · 29/11/2026',color:'#922957',accent:'#ffd095'}];
+let format="1:1";
 let selected=FrameSchedule.initial(),photo=null,zoom=1,dx=0,dy=0,drag=null,loading=0,logoReady=false,step=0,busy=false,lastPhase=null,noticeTimer=null;const logo=new Image();logo.src='logo.jpg';logo.onload=()=>{logoReady=true;render();thumbs();};logo.onerror=()=>{notify('Não foi possível carregar o logo. Atualize a página.');};
 function path(c,points,fill){c.fillStyle=fill;c.beginPath();points.forEach((p,i)=>i?c.lineTo(...p):c.moveTo(...p));c.closePath();c.fill();}
 function fitText(c,text,x,y,max,size,color){c.fillStyle=color;c.font=`900 ${size}px Arial`;while(c.measureText(text).width>max&&size>14)c.font=`900 ${--size}px Arial`;c.fillText(text,x,y);}
-function draw(c,index,mini=false){const s=styles[index],W=1080;c.clearRect(0,0,W,W);c.fillStyle='#dce4ef';c.fillRect(0,0,W,W);
-if(photo&&!mini){let scale=Math.max(W/photo.width,W/photo.height)*zoom,w=photo.width*scale,h=photo.height*scale;dx=Math.max(-(w-W)/2,Math.min((w-W)/2,dx));dy=Math.max(-(h-W)/2,Math.min((h-W)/2,dy));c.drawImage(photo,(W-w)/2+dx,(W-h)/2+dy,w,h);}else{let g=c.createLinearGradient(0,0,W,W);g.addColorStop(0,'#e7edf5');g.addColorStop(1,'#b7c8de');c.fillStyle=g;c.fillRect(0,0,W,W);c.strokeStyle='#ffffff55';c.lineWidth=3;for(let i=0;i<5;i++){c.beginPath();c.arc(1100,550,350+i*65,0,Math.PI*2);c.stroke();}}
+function draw(c,index,mini=false){const s=styles[index],W=1080,H=c.canvas.height/(c.canvas.width/W);c.clearRect(0,0,c.canvas.width,c.canvas.height);c.save();c.scale(c.canvas.width/W,c.canvas.width/W);c.fillStyle='#dce4ef';c.fillRect(0,0,W,H);
+if(photo&&!mini){const crop=FrameLayout.crop(photo.width,photo.height,W,H,zoom,dx,dy);dx=crop.dx;dy=crop.dy;c.drawImage(photo,crop.x,crop.y,crop.width,crop.height);}else{let g=c.createLinearGradient(0,0,W,H);g.addColorStop(0,'#e7edf5');g.addColorStop(1,'#b7c8de');c.fillStyle=g;c.fillRect(0,0,W,H);c.strokeStyle='#ffffff55';c.lineWidth=3;for(let i=0;i<5;i++){c.beginPath();c.arc(1100,550,350+i*65,0,Math.PI*2);c.stroke();}}
 
-c.fillStyle=s.color;c.fillRect(0,0,18,W);c.fillRect(W-18,0,18,W);c.fillRect(0,0,W,18);path(c,[[0,0],[420,0],[380,235],[0,235]],'#fff');if(logoReady)c.drawImage(logo,30,26,340,179);c.fillStyle=s.color;c.fillRect(810,38,232,50);c.fillStyle='white';c.font='bold 20px Arial';c.fillText('2ª EDIÇÃO · 2026',832,71);
+c.fillStyle=s.color;c.fillRect(0,0,18,H);c.fillRect(W-18,0,18,H);c.fillRect(0,0,W,18);path(c,[[0,0],[420,0],[380,235],[0,235]],'#fff');if(logoReady)c.drawImage(logo,30,26,340,179);c.fillStyle=s.color;c.fillRect(810,38,232,50);c.fillStyle='white';c.font='bold 20px Arial';c.fillText('2ª EDIÇÃO · 2026',832,71);
+if(index===1||index===5){c.strokeStyle=s.accent;c.lineWidth=index===1?6:8;c.strokeRect(34,258,1012,H-290);}
+c.save();c.translate(0,H-1080);
 let g=c.createLinearGradient(0,720,0,1080);g.addColorStop(0,s.color+'00');g.addColorStop(.62,s.color+'ee');g.addColorStop(1,s.color);c.fillStyle=g;c.fillRect(0,720,1080,360);
 if(index===0){path(c,[[0,945],[1080,865],[1080,1080],[0,1080]],s.color);path(c,[[770,1080],[867,986],[922,986],[825,1080]],s.accent);path(c,[[860,1080],[957,986],[1012,986],[915,1080]],s.accent);}
-if(index===1){c.strokeStyle=s.accent;c.lineWidth=6;c.strokeRect(34,275,1012,770);}
+
 if(index===2){path(c,[[0,1080],[0,900],[200,1080]],s.accent);path(c,[[1080,1080],[1080,820],[850,1080]],s.accent);}
 if(index===3){c.strokeStyle=s.accent;c.lineWidth=4;for(let i=0;i<3;i++){c.beginPath();c.arc(1090,1110,160+i*28,Math.PI,1.5*Math.PI);c.stroke();}}
 if(index===4){path(c,[[0,960],[1080,850],[1080,1080],[0,1080]],s.color);path(c,[[860,780],[920,780],[990,850],[920,920],[860,920],[930,850]],s.accent);}
-if(index===5){c.strokeStyle=s.accent;c.lineWidth=8;c.strokeRect(32,258,1016,790);path(c,[[880,1010],[960,930],[1010,930],[930,1010]],s.accent);}
+if(index===5){path(c,[[880,1010],[960,930],[1010,930],[930,1010]],s.accent);}
 if(index===6){c.fillStyle=s.accent;for(let j=0;j<3;j++)c.fillRect(870+j*55,800-j*35,28,55);path(c,[[0,1080],[0,1005],[75,1080]],s.accent);}
-let phrase=s.phrase;if(index===1&&!mini&&$('pace').value.trim())phrase+=' '+$('pace').value.trim()+' /KM';fitText(c,phrase,58,921,960,index===1?78:82,'white');fitText(c,mini?'':$('name').value.trim().toUpperCase(),58,972,800,32,s.accent);c.fillStyle=s.accent;c.font='bold 20px Arial';c.fillText(s.sub,58,1024);}
+let phrase=s.phrase;if(index===1&&!mini&&$('pace').value.trim())phrase+=' '+$('pace').value.trim()+' /KM';fitText(c,phrase,58,921,960,index===1?78:82,'white');fitText(c,mini?'':$('name').value.trim().toUpperCase(),58,972,800,32,s.accent);c.fillStyle=s.accent;c.font='bold 20px Arial';c.fillText(s.sub,58,1024);c.restore();c.restore();}
 const panels=['photoPanel','framePanel','detailsPanel'];
 function notify(message){clearTimeout(noticeTimer);$('status').textContent=message;$('status').hidden=false;noticeTimer=setTimeout(()=>$('status').hidden=true,6000);}
 function updateControls(){
  const ready=!!photo&&logoReady&&!busy&&FrameSchedule.allowed(selected);
  $('previewUpload').hidden=!!photo;$('changePhoto').hidden=!photo;
  ['zoom','zoomIn','zoomOut','reset'].forEach(id=>$(id).disabled=!photo);
+ document.querySelectorAll('[data-format]').forEach(b=>b.disabled=busy);
  $('continue').disabled=!ready;$('download').disabled=!ready;
  $('continue').hidden=step===2;$('download').hidden=step!==2;$('back').hidden=step===0;
  $('continue').querySelector('span').textContent=step===0?'Escolher moldura':'Finalizar minha foto';
@@ -31,7 +35,18 @@ function updateControls(){
  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('completed',!!photo&&i<step));
 }
 function render(){draw(ctx,selected);updateControls();}
-function thumbs(){document.querySelectorAll('.frame canvas').forEach(c=>{const temp=document.createElement('canvas');temp.width=temp.height=1080;draw(temp.getContext('2d'),Number(c.closest('.frame').dataset.index),true);c.getContext('2d').drawImage(temp,0,0,360,360);});}
+function thumbs(){const size=FrameLayout.formats[format];document.querySelectorAll('.frame canvas').forEach(c=>{c.width=360;c.height=Math.round(360*size.height/size.width);c.style.aspectRatio=`${size.width} / ${size.height}`;draw(c.getContext('2d'),Number(c.closest('.frame').dataset.index),true);});}
+function setFormat(value){
+ if(!FrameLayout.formats[value]||busy)return;
+ format=value;const size=FrameLayout.formats[value];canvas.width=size.width;canvas.height=size.height;
+ document.querySelectorAll('[data-format]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.format===format)));
+ document.querySelector('.preview-stage').classList.toggle('portrait',format==='9:16');
+ $('previewDimensions').textContent=`${size.width} × ${size.height}`;
+ $('exportSize').textContent=`PNG · ${size.width} × ${size.height} pixels · formato ${format}`;
+ pointers.clear();startGesture();reset();thumbs();
+}
+document.querySelectorAll('[data-format]').forEach(b=>b.onclick=()=>{setFormat(b.dataset.format);if(photo)notify('Formato alterado. Confira o enquadramento da foto antes de salvar.');});
+
 styles.forEach((s,i)=>{const b=document.createElement('button');b.className='frame';b.dataset.index=i;b.innerHTML=`<canvas width="360" height="360" aria-hidden="true"></canvas><span class="frame-title">${s.title}<span class="check">✓</span></span>`;b.addEventListener('click',()=>{syncAvailability();if(!FrameSchedule.allowed(i))return;selected=i;syncAvailability(true);render();});$('availableFrames').appendChild(b);});
 function syncAvailability(force=false){
  const now=Date.now(),phase=FrameSchedule.phase(now),before=phase==='before',previous=selected;
@@ -70,8 +85,8 @@ canvas.onpointerdown=e=>{if(!photo||pointers.size>=2)return;pointers.set(e.point
 canvas.onpointerup=canvas.onpointercancel=canvas.onlostpointercapture=e=>{pointers.delete(e.pointerId);startGesture();};canvas.onkeydown=e=>{if(!photo)return;const amount=e.shiftKey?40:10;if(e.key==='ArrowLeft')dx-=amount;else if(e.key==='ArrowRight')dx+=amount;else if(e.key==='ArrowUp')dy-=amount;else if(e.key==='ArrowDown')dy+=amount;else return;e.preventDefault();render();};
 $('download').onclick=()=>{
  syncAvailability();if(!photo||!logoReady||busy||!FrameSchedule.allowed(selected))return;
- const exportIndex=selected;if(selected===1&&$('pace').value&&!/^\d{1,2}:[0-5]\d$/.test($('pace').value)){showPanel('detailsPanel');$('pace').focus();notify('Preencha o pace como 05:30 ou deixe o campo em branco.');return;}
- busy=true;render();const snapshot=document.createElement('canvas');snapshot.width=snapshot.height=1080;snapshot.getContext('2d').drawImage(canvas,0,0);
- const done=()=>{busy=false;updateControls();};try{snapshot.toBlob(blob=>{done();if(!FrameSchedule.allowed(exportIndex)){syncAvailability();notify('O período mudou. Confira a nova moldura e salve novamente.');return;}if(!blob){notify('Não foi possível salvar a foto. Tente novamente.');return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`meu-corre-2026-${exportIndex+1}.png`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);notify('Foto salva! Confira os downloads do seu dispositivo.');},'image/png');}catch{done();notify('Não foi possível salvar. Abra o site pelo link publicado e tente novamente.');}
+ const exportIndex=selected,exportFormat=format;if(selected===1&&$('pace').value&&!/^\d{1,2}:[0-5]\d$/.test($('pace').value)){showPanel('detailsPanel');$('pace').focus();notify('Preencha o pace como 05:30 ou deixe o campo em branco.');return;}
+ busy=true;render();const snapshot=document.createElement('canvas');snapshot.width=canvas.width;snapshot.height=canvas.height;snapshot.getContext('2d').drawImage(canvas,0,0);
+ const done=()=>{busy=false;updateControls();};try{snapshot.toBlob(blob=>{done();if(!FrameSchedule.allowed(exportIndex)){syncAvailability();notify('O período mudou. Confira a nova moldura e salve novamente.');return;}if(!blob){notify('Não foi possível salvar a foto. Tente novamente.');return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`meu-corre-2026-${exportIndex+1}-${exportFormat.replace(':','x')}.png`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);notify('Foto salva! Confira os downloads do seu dispositivo.');},'image/png');}catch{done();notify('Não foi possível salvar. Abra o site pelo link publicado e tente novamente.');}
 };
 syncAvailability(true);render();thumbs();setInterval(syncAvailability,1000);window.addEventListener('focus',()=>syncAvailability());document.addEventListener('visibilitychange',()=>syncAvailability());
