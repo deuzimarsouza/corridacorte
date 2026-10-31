@@ -4,7 +4,12 @@ const FrameStickers = (() => {
   {id:'vai-ser-top',label:'VAI SER TOP!'},
   {id:'ansioso-demais',label:'ANSIOSO DEMAIS'},
   {id:'to-na-contagem',label:'TÔ NA CONTAGEM!'},
-  {id:'bora-bora',label:'BORA BORA!'}
+  {id:'bora-bora',label:'BORA BORA!'},
+  {id:'supere-seus-limites',label:'SUPERE SEUS LIMITES!'},
+  {id:'melhor-evento',label:'MELHOR EVENTO!'},
+  {id:'nosso-dia',label:'NOSSO DIA!'},
+  {id:'meu-pace',label:'MEU PACE!'},
+  {id:'meu-momento',label:'MEU MOMENTO!'}
  ];
  const sides = {left:{id:null,size:250,position:50},right:{id:null,size:250,position:50}};
  let active='left', changed=()=>{}, beginDrag=()=>{}, preview=null, dimensions={width:1080,height:1080}, dragging=null;

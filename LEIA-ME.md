@@ -32,7 +32,7 @@ As fotos são processadas localmente. O app não armazena as fotos entre sessõe
 
 ## Adesivos
 
-No passo **Finalizar**, escolha **Adesivo 1** ou **Adesivo 2** e uma das cinco artes. Cada adesivo tem tamanho e altura independentes. Toque e arraste o adesivo diretamente na prévia para qualquer posição da foto; no computador, use o mouse ou as setas do teclado (Shift para passos maiores). O arraste do adesivo não movimenta a foto. O botão **Voltar à posição inicial** restaura sua posição. Ao mudar o formato, a posição relativa é preservada. Use **Sem adesivo** para retirar apenas o adesivo selecionado. Eles acompanham a foto salva nos formatos 1:1, 3:4 e 9:16. O botão **Baixar adesivo PNG** salva o adesivo individual com fundo transparente. Os arquivos estão na pasta `stickers/`.
+No passo **Finalizar**, escolha **Adesivo 1** ou **Adesivo 2** e uma das dez artes. Cada adesivo tem tamanho e altura independentes. Toque e arraste o adesivo diretamente na prévia para qualquer posição da foto; no computador, use o mouse ou as setas do teclado (Shift para passos maiores). O arraste do adesivo não movimenta a foto. O botão **Voltar à posição inicial** restaura sua posição. Ao mudar o formato, a posição relativa é preservada. Use **Sem adesivo** para retirar apenas o adesivo selecionado. Eles acompanham a foto salva nos formatos 1:1, 3:4 e 9:16. O botão **Baixar adesivo PNG** salva o adesivo individual com fundo transparente. Os arquivos estão na pasta `stickers/`.
 
 ## Publicar o ZIP
 
