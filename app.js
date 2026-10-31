@@ -50,6 +50,7 @@ document.querySelectorAll('[data-format]').forEach(b=>b.onclick=()=>{setFormat(b
 styles.forEach((s,i)=>{const b=document.createElement('button');b.className='frame';b.dataset.index=i;b.innerHTML=`<canvas width="360" height="360" aria-hidden="true"></canvas><span class="frame-title">${s.title}<span class="check">✓</span></span>`;b.addEventListener('click',()=>{syncAvailability();if(!FrameSchedule.allowed(i))return;selected=i;syncAvailability(true);render();});$('availableFrames').appendChild(b);});
 function syncAvailability(force=false){
  const now=Date.now(),phase=FrameSchedule.phase(now),before=phase==='before',previous=selected;
+ EventCountdown.render($('eventCountdown'),now);
  if(!FrameSchedule.allowed(selected,now))selected=FrameSchedule.initial(now);
  if(force||lastPhase!==phase){
   document.querySelectorAll('.frame').forEach(b=>{const i=Number(b.dataset.index),available=FrameSchedule.allowed(i,now);b.disabled=!available;b.classList.toggle('selected',i===selected);b.setAttribute('aria-pressed',String(i===selected));b.setAttribute('title',available?styles[i].title:i>=4?'Período de pré-evento encerrado':'Libera em 29/11/2026 às 00h, horário de Brasília');$(available?'availableFrames':'unavailableFrames').appendChild(b);});

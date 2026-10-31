@@ -47,3 +47,5 @@ Os testes automatizados cobrem manifesto e recursos, as datas das sete molduras,
 Para executar os testes no repositório: `node --test tests/pwa.test.cjs`.
 
 Referências técnicas: [instalação de PWAs (MDN)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable), [web apps no iPhone (Apple)](https://support.apple.com/guide/iphone/iphea86e5236/ios).
+
+A contagem regressiva no topo atualiza a cada segundo até 29/11/2026 às 05h30, no horário de Brasília (08h30 UTC), usando o relógio do dispositivo. Ao chegar à largada, mostra “A largada chegou! Bom corre!”. Essa contagem é independente da liberação das molduras, que continua às 00h de Brasília.
