@@ -1,4 +1,4 @@
-const CACHE = 'meu-corre-v10-stickers';
+const CACHE = 'meu-corre-v11-drag-stickers';
 const FILES = ['./', 'index.html', 'style.css', 'install.css', 'schedule.js', 'formats.js', 'app.js', 'stickers.js', 'stickers/bora-correr.png', 'stickers/vai-ser-top.png', 'stickers/ansioso-demais.png', 'stickers/to-na-contagem.png', 'stickers/bora-bora.png', 'pwa.js', 'logo.jpg', 'manifest.webmanifest', 'icons/runner-192.png', 'icons/runner-512.png', 'icons/runner-maskable-512.png', 'icons/runner-apple-180.png'];
 const URLS = FILES.map(file => new URL(file, self.registration.scope).href);
 const PAGES = ['./', 'index.html'].map(file => new URL(file, self.registration.scope));
