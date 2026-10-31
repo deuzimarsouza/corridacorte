@@ -13,7 +13,8 @@ const FrameStickers = (() => {
  ];
  const sides = {left:{id:null,size:250,position:50},right:{id:null,size:250,position:50}};
  let active='left', changed=()=>{}, beginDrag=()=>{}, preview=null, dimensions={width:1080,height:1080}, dragging=null;
- const handles=new Map();
+ const handles=new Map(),resizeHandles=new Map();
+ const MIN_SIZE=120,MAX_SIZE=460;
  const images=new Map();
  function bounds(width,height,side,size,position) {
   // Reserve the header and footer, with a gap from the frame edges.
@@ -34,6 +35,13 @@ const FrameStickers = (() => {
   state.free={x:clamp(x/(width-box.size)),y:clamp(y/(height-box.size))};
   active=side;sync();changed();
  }
+ function resize(side,size,anchor){
+  const state=sides[side];if(!state?.id||!Number.isFinite(size))return;
+  const {width,height}=dimensions,box=anchor||placement(width,height,side,state);
+  state.size=Math.round(Math.max(MIN_SIZE,Math.min(MAX_SIZE,size)));
+  state.free={x:clamp(box.x/(width-state.size)),y:clamp(box.y/(height-state.size))};
+  active=side;sync();changed();
+ }
  function updateHandles(){
   const {width,height}=dimensions;
   for(const [side,button] of handles){
@@ -44,6 +52,11 @@ const FrameStickers = (() => {
    button.classList.toggle('is-selected',active===side);
    button.style.zIndex=active===side?'4':'3';
    button.setAttribute('aria-label',(items.find(item=>item.id===state.id)?.label||'Adesivo')+'. Arraste para mover ou use as setas do teclado.');
+   const handle=resizeHandles.get(side);
+   handle.hidden=button.hidden||active!==side;
+   handle.style.left='clamp(22px, '+100*(box.x+box.size)/width+'%, calc(100% - 22px))';
+   handle.style.top='clamp(22px, '+100*(box.y+box.size)/height+'%, calc(100% - 22px))';
+   handle.setAttribute('aria-label','Redimensionar '+(items.find(item=>item.id===state.id)?.label||'adesivo')+'. Arraste ou use as setas do teclado.');
   }
  }
  function attachHandles(canvas){
@@ -58,7 +71,7 @@ const FrameStickers = (() => {
     beginDrag();active=side;button.setPointerCapture(e.pointerId);button.focus({preventScroll:true});button.classList.add('is-dragging');sync();changed();
    };
    button.onpointermove=e=>{
-    if(!dragging||dragging.pointer!==e.pointerId||dragging.side!==side)return;e.preventDefault();
+    if(!dragging||dragging.mode==='resize'||dragging.pointer!==e.pointerId||dragging.side!==side)return;e.preventDefault();
     move(side,dragging.x+(e.clientX-dragging.clientX)*dragging.scale,dragging.y+(e.clientY-dragging.clientY)*dragging.scale,dimensions.width,dimensions.height);
    };
    const finish=e=>{if(dragging?.pointer===e.pointerId&&dragging.side===side){dragging=null;button.classList.remove('is-dragging');}};
@@ -70,6 +83,26 @@ const FrameStickers = (() => {
     move(side,box.x+(e.key==='ArrowRight'?amount:e.key==='ArrowLeft'?-amount:0),box.y+(e.key==='ArrowDown'?amount:e.key==='ArrowUp'?-amount:0),dimensions.width,dimensions.height);
    };
    canvas.parentElement.append(button);handles.set(side,button);
+   const handle=document.createElement('button');handle.type='button';handle.className='sticker-resize-handle';handle.hidden=true;handle.textContent='↔';
+   handle.title='Arraste para redimensionar';handle.setAttribute('aria-describedby','stickerMoveHelp');
+   handle.onpointerdown=e=>{
+    if(dragging||e.button!==0)return;e.preventDefault();e.stopPropagation();
+    const box=placement(dimensions.width,dimensions.height,side,sides[side]);
+    dragging={mode:'resize',pointer:e.pointerId,side,clientX:e.clientX,clientY:e.clientY,...box,scale:dimensions.width/preview.getBoundingClientRect().width};
+    beginDrag();active=side;handle.setPointerCapture(e.pointerId);handle.focus({preventScroll:true});sync();changed();
+   };
+   handle.onpointermove=e=>{
+    if(dragging?.mode!=='resize'||dragging.pointer!==e.pointerId||dragging.side!==side)return;e.preventDefault();
+    const delta=((e.clientX-dragging.clientX)+(e.clientY-dragging.clientY))/2*dragging.scale;
+    resize(side,dragging.size+delta,dragging);
+   };
+   handle.onpointerup=handle.onpointercancel=handle.onlostpointercapture=finish;
+   handle.onkeydown=e=>{
+    if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-'].includes(e.key))return;
+    e.preventDefault();e.stopPropagation();
+    resize(side,sides[side].size+(['ArrowRight','ArrowDown','+'].includes(e.key)?1:-1)*(e.shiftKey?40:10));
+   };
+   canvas.parentElement.append(handle);resizeHandles.set(side,handle);
   }
  }
  function draw(context,width,height){
@@ -85,7 +118,13 @@ const FrameStickers = (() => {
  function sync(){
   const state=sides[active];
   document.querySelectorAll('[data-sticker-side]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.stickerSide===active)));
-  document.querySelectorAll('[data-sticker]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sticker===(state.id||''))));
+  document.querySelectorAll('[data-sticker]').forEach(b=>{
+   const inUse=!!b.dataset.sticker&&b.dataset.sticker===sides[active==='left'?'right':'left'].id;
+   b.disabled=inUse;
+   b.setAttribute('aria-pressed',String(b.dataset.sticker===(state.id||'')));
+   b.title=inUse?'Já usado no outro adesivo':'';
+   if(b.usageBadge)b.usageBadge.hidden=!inUse;
+  });
   for(const prop of ['size','position']){const input=document.getElementById('sticker-'+prop);input.value=prop==='position'&&state.free?Math.round(state.free.y*100):state[prop];input.disabled=!state.id;}
   document.getElementById('sticker-size-value').textContent=Math.round(state.size/250*100)+'%';
   document.getElementById('sticker-position-value').textContent=(state.free?Math.round(state.free.y*100):state.position)+'%';
@@ -93,7 +132,7 @@ const FrameStickers = (() => {
   const link=document.getElementById('sticker-download');link.hidden=!state.id;
   if(state.id){link.href='stickers/'+state.id+'.png';link.download=state.id+'.png';}
   const asset=images.get(state.id);
-  document.getElementById('sticker-feedback').textContent=asset?.status==='loading'?'Carregando adesivo…':asset?.status==='error'?'Não foi possível carregar. Toque no adesivo para tentar novamente ou escolha Sem adesivo.':state.id?'Arraste este adesivo na prévia para a posição que preferir.':'Escolha um adesivo para começar.';
+  document.getElementById('sticker-feedback').textContent=asset?.status==='loading'?'Carregando adesivo…':asset?.status==='error'?'Não foi possível carregar. Toque no adesivo para tentar novamente ou escolha Sem adesivo.':state.id?'Arraste o adesivo para mover. Arraste o botão azul no canto para ajustar o tamanho.':'Escolha um adesivo diferente para cada espaço.';
  }
  function ensure(id){
   if(!id||['loading','ready'].includes(images.get(id)?.status))return;
@@ -111,10 +150,20 @@ const FrameStickers = (() => {
    button.setAttribute('aria-label',item.label);button.setAttribute('aria-pressed','false');
    if(item.id){const image=document.createElement('img');image.src='stickers/'+item.id+'.png';image.alt='';image.loading='lazy';button.append(image);}else{const icon=document.createElement('span');icon.className='sticker-none';icon.textContent='−';button.append(icon);}
    const label=document.createElement('span');label.textContent=item.label;button.append(label);
-   button.onclick=()=>{sides[active].id=item.id||null;ensure(item.id);sync();changed();};grid.append(button);
+   if(item.id){const badge=document.createElement('small');badge.className='sticker-used';badge.textContent='Já usado';badge.hidden=true;button.usageBadge=badge;button.append(badge);}
+   button.onclick=()=>{
+    if(item.id&&sides[active==='left'?'right':'left'].id===item.id)return;
+    sides[active].id=item.id||null;ensure(item.id);sync();changed();
+   };grid.append(button);
   }
   document.querySelectorAll('[data-sticker-side]').forEach(b=>b.onclick=()=>{active=b.dataset.stickerSide;sync();changed();});
-  for(const prop of ['size','position'])document.getElementById('sticker-'+prop).oninput=e=>{const state=sides[active];state[prop]=Number(e.target.value);if(prop==='position'&&state.free)state.free.y=state.position/100;sync();changed();};
+  for(const prop of ['size','position'])document.getElementById('sticker-'+prop).oninput=e=>{
+   const state=sides[active];if(!state.id)return;
+   if(prop==='size'){resize(active,Number(e.target.value));return;}
+   const box=placement(dimensions.width,dimensions.height,active,state);
+   state.position=Number(e.target.value);
+   state.free={x:clamp(box.x/(dimensions.width-box.size)),y:clamp(state.position/100)};sync();changed();
+  };
   document.getElementById('sticker-reset').onclick=()=>{sides[active].free=null;sides[active].position=50;sync();changed();};
   sync();
  }
