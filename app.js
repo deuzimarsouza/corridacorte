@@ -54,7 +54,7 @@ function syncAvailability(force=false){
  if(!FrameSchedule.allowed(selected,now))selected=FrameSchedule.initial(now);
  if(force||lastPhase!==phase){
   document.querySelectorAll('.frame').forEach(b=>{const i=Number(b.dataset.index),available=FrameSchedule.allowed(i,now);b.disabled=!available;b.classList.toggle('selected',i===selected);b.setAttribute('aria-pressed',String(i===selected));b.setAttribute('title',available?styles[i].title:i>=4?'Período de pré-evento encerrado':'Libera em 29/11/2026 às 00h, horário de Brasília');$(available?'availableFrames':'unavailableFrames').appendChild(b);});
-  $('paceField').hidden=selected!==1;$('selectedName').textContent=styles[selected].title;
+  $('paceField').hidden=selected!==1;
   $('phaseNotice').textContent=before?'3 molduras para confirmar sua presença. Disponíveis até 28/11 às 23h59.':'4 molduras para celebrar sua conquista. Escolha a sua!';
   $('eventPhase').textContent=before?'Molduras de pré-evento disponíveis':'Molduras de pós-evento disponíveis';
   $('lockedTitle').textContent=before?'Molduras de pós-evento':'Molduras de pré-evento';$('lockedCount').textContent=before?'4 bloqueadas':'3 encerradas';
