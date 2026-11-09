@@ -1,15 +1,237 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f6f8fc"><meta name="description" content="Crie sua foto da 2ª Corrida Corte com molduras personalizadas. Escolha, ajuste e salve no seu dispositivo."><meta name="application-name" content="Meu Corre"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Meu Corre"><link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials"><link rel="icon" type="image/png" href="icons/runner-192.png"><link rel="apple-touch-icon" href="icons/runner-apple-180.png"><title>Meu Corre · Corrida Corte 2026</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="install.css"><script src="pwa.js" defer></script></head>
-<body data-app="corrida-app"><svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><symbol id="ic-photo" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/></symbol><symbol id="ic-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol><symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="ic-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/></symbol><symbol id="ic-install" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M12 6v9m-3-3 3 3 3-3M10 18h4"/></symbol></svg>
-<header class="app-header"><a class="brand" href="./" aria-label="Corrida Corte, página inicial"><img src="logo.jpg" width="1536" height="806" alt="2ª Corrida Corte 2026"></a><button class="install-button" id="installButton"><svg><use href="#ic-install"/></svg><span>Instalar app</span></button></header>
-<main><div class="page-intro"><div><h1>Seu momento.<br class="mobile-break"> Do seu jeito<span>.</span></h1></div><section class="event-badge" aria-label="Contagem regressiva para a Corrida Corte"><div class="countdown-top"><span class="countdown-kicker"><i aria-hidden="true"></i> RUMO À LARGADA</span><span class="countdown-spark" aria-hidden="true">↗</span></div><div id="eventCountdown" role="timer" aria-live="off" aria-atomic="true"><span class="countdown-readable" data-countdown-message>Contagem regressiva para a largada</span><div class="countdown-digits" aria-hidden="true"><div class="countdown-unit"><strong data-countdown-days>—</strong><span>DIAS</span></div><div class="countdown-unit"><strong data-countdown-hours>—</strong><span>HORAS</span></div><div class="countdown-unit"><strong data-countdown-minutes>—</strong><span>MINUTOS</span></div></div><p class="countdown-hint" data-countdown-hint aria-hidden="true" hidden></p></div><div class="countdown-event"><time datetime="2026-11-29T05:30:00-03:00">29 nov 2026 <span aria-hidden="true">·</span> 05h30 <span class="countdown-zone">(Brasília)</span></time></div><span class="countdown-readable" id="eventPhase">Molduras de pré-evento disponíveis</span></section></div>
-<div class="workbench"><section class="preview-panel" aria-label="Prévia da foto"><div class="section-label"><span><i></i> PRÉVIA EM TEMPO REAL</span><span id="previewDimensions">1080 × 1080</span></div><div class="preview-stage"><div class="canvas-wrap"><canvas id="canvas" width="1080" height="1080" tabindex="0" aria-label="Prévia. Com uma foto carregada, arraste ou use as setas do teclado para posicionar."></canvas><button id="previewUpload" class="preview-upload"><span class="upload-glyph"><svg><use href="#ic-photo"/></svg></span><strong>Adicione sua foto</strong><span>Toque para escolher da galeria</span><span class="upload-mini">JPG, PNG ou WebP</span></button></div><button class="change-photo" id="changePhoto" hidden><svg><use href="#ic-photo"/></svg> Trocar foto</button></div><p class="preview-tip" id="previewTip">Sua foto aparece aqui, com a moldura escolhida.</p></section>
-<section class="editor" aria-label="Personalizar foto"><div class="editor-top"><span>CRIE SUA FOTO</span><span id="stepCount">PASSO 1 DE 3</span></div><nav class="tabs" role="tablist" aria-label="Passos para criar a foto"><button class="tab active" role="tab" id="tab-photo" aria-controls="photoPanel" aria-selected="true" data-panel="photoPanel"><b>1</b><span>Sua foto</span></button><button class="tab" role="tab" id="tab-frame" aria-controls="framePanel" aria-selected="false" tabindex="-1" data-panel="framePanel"><b>2</b><span>Moldura</span></button><button class="tab" role="tab" id="tab-details" aria-controls="detailsPanel" aria-selected="false" tabindex="-1" data-panel="detailsPanel"><b>3</b><span>Finalizar</span></button></nav>
-<section id="photoPanel" class="panel" role="tabpanel" aria-labelledby="tab-photo"><h2>Comece com a sua foto</h2><label class="upload" id="drop"><input id="file" type="file" accept="image/jpeg,image/png,image/webp"><span class="upload-icon"><svg><use href="#ic-photo"/></svg></span><span><strong id="uploadLabel">Escolher foto</strong><small>Da galeria ou arraste para cá · até 20 MB</small></span><span class="upload-plus">+</span></label><section class="format-section" aria-labelledby="formatTitle"><div><h3 id="formatTitle">Formato da foto</h3></div><div class="format-picker" role="group" aria-label="Formato da moldura"><button data-format="1:1" aria-pressed="true"><i class="ratio-square" aria-hidden="true"></i><span><strong>1:1</strong><small>Quadrado</small></span></button><button data-format="3:4" aria-pressed="false"><i class="ratio-retrato" aria-hidden="true"></i><span><strong>3:4</strong><small>Retrato</small></span></button><button data-format="9:16" aria-pressed="false"><i class="ratio-portrait" aria-hidden="true"></i><span><strong>9:16</strong><small>Vertical</small></span></button></div></section><div class="adjust" id="adjustControls"><div class="control-heading"><label for="zoom">Ajustar enquadramento</label><output id="zoomValue">100%</output></div><div class="zoom-row"><button id="zoomOut" class="icon-button" aria-label="Diminuir zoom" disabled>−</button><input id="zoom" type="range" min="1" max="3" step="0.01" value="1" disabled><button id="zoomIn" class="icon-button" aria-label="Aumentar zoom" disabled>+</button></div><div class="adjust-bottom"><small>Arraste a foto para posicionar.</small><button id="reset" class="text-button" disabled>↺ Centralizar</button></div></div></section>
-<section id="framePanel" class="panel" role="tabpanel" aria-labelledby="tab-frame" hidden><h2>Escolha sua moldura</h2><p class="panel-description">Toque em um estilo para ver como fica.</p><p class="phase-notice" id="phaseNotice"></p><div id="availableFrames" class="frames"></div><details class="locked-frames"><summary><span id="lockedTitle">Molduras de pós-evento</span><span id="lockedCount">4 bloqueadas</span></summary><p id="lockedNote">Liberadas em 29/11/2026 às 00h, horário de Brasília.</p><div class="frames" id="unavailableFrames"></div></details></section>
-<section id="detailsPanel" class="panel" role="tabpanel" aria-labelledby="tab-details" hidden><h2>Quase pronta!</h2><p class="panel-description">Adicione seu nome, se quiser, e salve a sua foto.</p><div class="field"><label for="name">Seu nome <span>opcional</span></label><input id="name" maxlength="28" placeholder="Como você quer aparecer?" autocomplete="given-name"></div><div class="field" id="paceField" hidden><label for="pace">Seu pace <span>min/km · opcional</span></label><input id="pace" maxlength="5" placeholder="Ex.: 05:30" inputmode="text" aria-describedby="paceHelp"><small id="paceHelp">Use minutos e segundos, como 05:30.</small></div><section class="sticker-section" aria-labelledby="stickerTitle"><div class="sticker-heading"><h3 id="stickerTitle">Adesivos divertidos</h3><span>OPCIONAL</span></div><p>Escolha até dois adesivos diferentes. Toque na prévia para mover e redimensionar.</p><div class="sticker-sides" role="group" aria-label="Adesivo para editar"><button type="button" data-sticker-side="left" aria-pressed="true">Adesivo 1</button><button type="button" data-sticker-side="right" aria-pressed="false">Adesivo 2</button></div><div id="sticker-grid" class="sticker-grid" role="group" aria-label="Escolha um adesivo"></div><div class="sticker-control"><label for="sticker-size">Tamanho <output id="sticker-size-value">100%</output></label><input type="range" id="sticker-size" min="120" max="460" step="1" value="250" disabled></div><div class="sticker-control"><label for="sticker-position">Altura <output id="sticker-position-value">50%</output></label><input type="range" id="sticker-position" min="0" max="100" step="1" value="50" disabled><div class="sticker-range-labels"><span>Mais acima</span><span>Mais abaixo</span></div></div><p id="stickerMoveHelp">Arraste o adesivo para mover. Use o botão azul ↔ no canto para aumentar ou diminuir. Você também pode usar os controles de tamanho e altura abaixo dos adesivos. No computador, use as setas do teclado.</p><button type="button" id="sticker-reset" class="sticker-reset" disabled>Voltar à posição inicial</button><p id="sticker-feedback" role="status" aria-live="polite"></p><a id="sticker-download" class="sticker-download" hidden>Baixar adesivo PNG</a></section><div class="export-card"><span class="export-icon"><svg><use href="#ic-download"/></svg></span><div><strong>Pronta para compartilhar</strong><small id="exportSize">PNG · 1080 × 1080 pixels · formato 1:1</small></div><span class="export-tick">✓</span></div><p class="final-hint">Ao salvar, a imagem vai para os downloads do dispositivo.</p></section>
-<div class="editor-actions"><p id="actionHint">Adicione uma foto para continuar.</p><div class="action-row"><button id="back" class="back-button" hidden aria-label="Voltar ao passo anterior">←</button><button id="continue" class="primary" disabled><span>Escolher moldura</span><svg><use href="#ic-arrow"/></svg></button><button id="download" class="primary" hidden disabled><svg><use href="#ic-download"/></svg><span>Salvar minha foto</span></button></div></div></section></div>
-<aside class="install-card" id="installCard" aria-label="Instalar Meu Corre"><img src="icons/runner-192.png" alt=""><div><span class="eyebrow">ANDROID · IPHONE · COMPUTADOR</span><h2>Seu corre, a um toque.</h2><p>Adicione o Meu Corre à sua tela e abra como um aplicativo.</p></div><button id="installCardButton" class="install-button"><svg><use href="#ic-install"/></svg>Como instalar</button></aside><p class="offline-status" id="offlineStatus" role="status"></p><div class="bottom-note"><span>COLECIONANDO QUILÔMETROS E BOAS MEMÓRIAS.</span><span>FEITO PARA O SEU CORRE ↗</span></div></main>
-<p id="status" role="status" aria-live="polite" hidden></p><p id="connectionStatus" class="connection-status" hidden>Você está offline. Continue editando sua foto.</p><div id="updateNotice" class="update-notice" hidden><span>Nova versão disponível. Salve sua foto antes de atualizar.</span><button id="updateApp">Atualizar</button></div>
-<dialog id="installDialog" aria-labelledby="installTitle"><div class="dialog-top"><div class="dialog-brand"><img src="icons/runner-192.png" alt=""><span><strong>Meu Corre</strong><small>2ª Corrida Corte · 2026</small></span></div><button class="icon-button" id="closeInstall" aria-label="Fechar orientações">×</button></div><p class="eyebrow">SEU CORRE A UM TOQUE</p><h2 id="installTitle">Instale e leve com você.</h2><p>Crie suas fotos em um app com ícone próprio. A instalação é feita pelo navegador.</p><div class="platform-picker" role="group" aria-label="Dispositivo para instalar"><button data-install-platform="android" aria-pressed="false">Android</button><button data-install-platform="ios" aria-pressed="false">iPhone / iPad</button><button data-install-platform="desktop" aria-pressed="false">Computador</button></div><p id="installWarning" class="install-warning" hidden></p><button id="nativeInstall" class="primary" hidden>Instalar agora</button><div id="installInstructions"></div><div class="install-link"><label for="appAddress">Abrir em outro dispositivo ou navegador</label><div><input id="appAddress" type="url" readonly aria-label="Link do app"><button id="copyAppLink" class="install-button">Copiar link</button></div></div><p id="installFeedback" class="install-feedback" role="status" aria-live="polite"></p><button id="dismissInstall" class="dialog-dismiss">Continuar no site</button></dialog>
-<noscript>Ative o JavaScript no navegador para escolher fotos e criar suas molduras.</noscript><script src="schedule.js"></script><script src="countdown.js"></script><script src="formats.js"></script><script src="stickers.js"></script><script src="app.js"></script></body></html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#121e35" />
+    <meta name="description" content="Crie sua foto da 2ª Corrida Corte. Escolha a moldura, personalize e salve para o feed ou os stories." />
+    <meta name="application-name" content="Meu Corre" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Meu Corre" />
+    <link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials" />
+    <link rel="icon" type="image/png" href="icons/runner-192.png" />
+    <link rel="apple-touch-icon" href="icons/runner-apple-180.png" />
+    <link rel="preload" href="assets/exemplo-corrida.webp" as="image" type="image/webp" />
+    <title>Meu Corre · Estúdio de molduras</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="design.css" />
+    <link rel="stylesheet" href="install.css" />
+    <script src="pwa.js" defer></script>
+  </head>
+  <body data-app="corrida-app">
+    <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <symbol id="ic-photo" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m3 17 4.5-4.5 3.5 3.5 4.5-6L21 16"/></symbol>
+      <symbol id="ic-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/></symbol>
+      <symbol id="ic-install" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="3"/><path d="M12 6v7m-3-3 3 3 3-3m-4 8h2"/></symbol>
+      <symbol id="ic-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.3 2.3 0 0 1 4.5.7c0 1.8-2.3 2.1-2.3 4m0 2.6v.1"/></symbol>
+      <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+      <symbol id="ic-back" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
+      <symbol id="ic-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></symbol>
+      <symbol id="ic-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8.5 12 2.3 2.3 4.7-4.8"/></symbol>
+      <symbol id="ic-share" viewBox="0 0 24 24"><path d="M12 15V3m-4 4 4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
+      <symbol id="ic-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 11h18"/></symbol>
+      <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="ic-tune" viewBox="0 0 24 24"><path d="M3 7h6m4 0h8M3 17h10m4 0h4"/><circle cx="11" cy="7" r="2"/><circle cx="15" cy="17" r="2"/></symbol>
+      <symbol id="ic-view" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="ic-expand" viewBox="0 0 24 24"><path d="M14 4h6v6m0-6-6 6M10 20H4v-6m0 6 6-6"/></symbol>
+      <symbol id="ic-feed" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M5 16h14"/></symbol>
+      <symbol id="ic-stories" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.7"/><path d="M10.5 18.5h3"/></symbol>
+      <symbol id="ic-upload" viewBox="0 0 24 24"><path d="M12 15V3m-4 4 4-4 4 4M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></symbol>
+      <symbol id="ic-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="ic-check" viewBox="0 0 24 24"><path d="m4.5 12 5 5 10-10"/></symbol>
+      <symbol id="ic-edit" viewBox="0 0 24 24"><path d="m14.5 5.5 4 4m-13 9 4.5-1 10-10a2.8 2.8 0 0 0-4-4l-10 10z"/></symbol>
+      <symbol id="ic-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+      <symbol id="ic-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+      <symbol id="ic-sticker" viewBox="0 0 24 24"><path d="M11 21H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v5c0 4-6 10-10 10Z"/><path d="M11 21v-5a5 5 0 0 1 5-5h5"/></symbol>
+      <symbol id="ic-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="ic-wifi" viewBox="0 0 24 24"><path d="M2 8a15 15 0 0 1 20 0M5.5 11.5a10 10 0 0 1 13 0M9 15a5 5 0 0 1 6 0"/><circle cx="12" cy="18.5" r=".75"/></symbol>
+      <symbol id="ic-move" viewBox="0 0 24 24"><path d="M12 3v18m0-18L9 6m3-3 3 3m-3 15-3-3m3 3 3-3M3 12h18m-18 0 3-3m-3 3 3 3m15-3-3-3m3 3-3 3"/></symbol>
+    </svg>
+    <a class="skip" href="#editor">Ir para o editor</a>
+    <header id="inicio" class="app-header">
+      <div class="shell header-inner">
+        <a href="#inicio" class="brand" aria-label="Meu Corre, início">
+          <img src="logo.jpg" width="1536" height="806" alt="2ª Corrida Corte 2026" />
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="wordmark">Meu <em>Corre</em></span>
+        </a>
+        <div class="header-actions">
+          <button id="helpButton" class="quiet" type="button" aria-label="Como usar o editor"><svg aria-hidden="true"><use href="#ic-help"/></svg><span>Como usar</span></button>
+          <button id="installButton" class="outline" type="button" aria-label="Instalar app"><svg aria-hidden="true"><use href="#ic-install"/></svg><span>Instalar<span class="install-suffix"> app</span></span></button>
+        </div>
+      </div>
+    </header>
+    <main class="shell">
+      <section class="race-banner" aria-labelledby="studioTitle">
+        <svg class="track-art" viewBox="0 0 650 210" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <defs><path id="lane" d="M-200 218H120C295 218 375 185 457 64L583-130"/></defs>
+          <g fill="none">
+            <use href="#lane" stroke="#1b3d80" stroke-width="38" transform="translate(43 4)"/>
+            <g stroke="#527bf0" stroke-width="1.6">
+              <use href="#lane"/><use href="#lane" transform="translate(29 0)"/><use href="#lane" transform="translate(58 0)"/><use href="#lane" transform="translate(87 0)"/><use href="#lane" transform="translate(116 0)"/><use href="#lane" transform="translate(145 0)"/>
+            </g>
+            <use href="#lane" stroke="#c3e887" stroke-width="2" transform="translate(174 0)"/>
+          </g>
+        </svg>
+        <div class="race-intro">
+          <p class="race-label"><span class="speed-mark" aria-hidden="true"><i></i><i></i><i></i></span>2ª Corrida Corte</p>
+          <h1 id="studioTitle">Estúdio de <em>molduras</em></h1>
+          <div class="event-meta">
+            <time datetime="2026-11-29"><svg aria-hidden="true"><use href="#ic-calendar"/></svg>29 nov 2026</time>
+            <span class="meta-divider" aria-hidden="true"></span>
+            <time datetime="2026-11-29T05:30:00-03:00"><svg aria-hidden="true"><use href="#ic-clock"/></svg>05h30 <span class="time-zone">(Brasília)</span></time>
+          </div>
+        </div>
+        <div class="race-clock" id="eventCountdown" role="timer" aria-live="off" aria-atomic="true">
+          <div class="clock-label"><i aria-hidden="true"></i><span data-countdown-label>Até a largada</span></div>
+          <span class="sr-only" data-countdown-message>Contagem regressiva para a largada</span>
+          <div class="clock-digits" aria-hidden="true">
+            <span class="unit"><b data-countdown-days>—</b><small>dias</small></span><i>:</i>
+            <span class="unit"><b data-countdown-hours>—</b><small>horas</small></span><i>:</i>
+            <span class="unit"><b data-countdown-minutes>—</b><small>min</small></span>
+          </div>
+          <p class="clock-hint" data-countdown-hint aria-hidden="true" hidden></p>
+        </div>
+      </section>
+      <div class="workbench">
+        <section class="preview-panel card" id="previewPanel" aria-labelledby="previewTitle">
+          <div class="card-head">
+            <div class="card-heading"><svg aria-hidden="true"><use href="#ic-view"/></svg><h2 id="previewTitle">Prévia<span class="preview-suffix"> da moldura</span></h2></div>
+            <div class="head-tools"><span class="sample-badge" id="previewState">Foto de exemplo</span><button class="icon-button" id="expandPreview" type="button" aria-label="Ampliar prévia" title="Ampliar prévia"><svg aria-hidden="true"><use href="#ic-expand"/></svg></button></div>
+          </div>
+          <div id="stageHome">
+            <div class="preview-stage" id="previewStage">
+              <div class="registration-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <div class="canvas-wrap">
+                <canvas id="canvas" width="1080" height="1440" tabindex="0" aria-label="Prévia da moldura com uma foto de exemplo."></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="preview-caption">
+            <div class="selected-frame"><i id="frameSwatch" aria-hidden="true"></i><div><small>Moldura<span class="frame-suffix"> selecionada</span></small><strong id="frameName">Eu estarei lá!</strong></div></div>
+            <div class="preview-meta"><b id="previewFormat">FEED · 3:4</b><span id="previewDimensions">1080 × 1440 px</span></div>
+            <button class="mobile-pick primary" id="previewUpload" type="button"><svg aria-hidden="true"><use id="previewActionIcon" href="#ic-plus"/></svg><span id="previewActionLabel">Escolher foto</span></button>
+          </div>
+          <div class="photo-tools" id="photoTools" hidden>
+            <p id="previewTip"><svg aria-hidden="true"><use href="#ic-move"/></svg><span>Arraste para mover. Use dois dedos ou a roda do mouse para ampliar.</span></p>
+            <button id="changePhoto" class="quiet" type="button"><svg aria-hidden="true"><use href="#ic-edit"/></svg>Trocar foto</button>
+          </div>
+        </section>
+        <section class="editor card" id="editor" tabindex="-1" aria-labelledby="editorTitle">
+          <div class="card-head">
+            <div class="card-heading"><svg aria-hidden="true"><use href="#ic-tune"/></svg><h2 id="editorTitle">Personalizar</h2></div>
+            <span id="stepCount" class="step-count">Etapa 1 de 3</span>
+            <button class="mobile-preview quiet" type="button" id="mobilePreview"><svg aria-hidden="true"><use href="#ic-expand"/></svg>Ver prévia</button>
+          </div>
+          <nav class="tabs" role="tablist" aria-label="Etapas da edição">
+            <button type="button" class="tab active" role="tab" id="tab-photo" aria-controls="photoPanel" aria-selected="true" data-panel="photoPanel"><svg aria-hidden="true"><use href="#ic-photo"/></svg>Foto</button>
+            <button type="button" class="tab" role="tab" id="tab-frame" aria-controls="framePanel" aria-selected="false" tabindex="-1" data-panel="framePanel"><svg aria-hidden="true"><use href="#ic-layers"/></svg>Moldura</button>
+            <button type="button" class="tab" role="tab" id="tab-details" aria-controls="detailsPanel" aria-selected="false" tabindex="-1" data-panel="detailsPanel"><svg aria-hidden="true"><use href="#ic-check"/></svg>Finalizar</button>
+          </nav>
+          <section id="photoPanel" class="panel" role="tabpanel" aria-labelledby="tab-photo">
+            <h3>Sua foto</h3>
+            <input id="file" type="file" accept="image/jpeg,image/png,image/webp" hidden />
+            <button type="button" class="upload" id="drop" aria-labelledby="uploadLabel" aria-describedby="uploadMeta">
+              <span class="upload-symbol" aria-hidden="true"><svg><use href="#ic-photo"/></svg><i><svg><use href="#ic-plus"/></svg></i></span>
+              <canvas id="fileThumbnail" width="112" height="112" hidden aria-hidden="true"></canvas>
+              <span class="pick-label"><svg aria-hidden="true"><use href="#ic-upload"/></svg><strong id="uploadLabel">Escolher foto</strong></span>
+              <span class="file-name" id="fileName" hidden></span>
+              <small id="uploadMeta">JPG, PNG ou WebP · até 20 MB</small>
+              <span class="drag-caption">ou arraste a imagem para cá</span>
+            </button>
+            <fieldset class="format-section">
+              <legend>Formato de saída</legend>
+              <div class="format-picker">
+                <button type="button" data-format="3:4" aria-pressed="true">
+                  <svg class="format-icon" aria-hidden="true"><use href="#ic-feed"/></svg>
+                  <span><strong>FEED</strong><small>3:4</small></span>
+                  <i class="radio-mark" aria-hidden="true"><svg><use href="#ic-check"/></svg></i>
+                </button>
+                <button type="button" data-format="9:16" aria-pressed="false">
+                  <svg class="format-icon" aria-hidden="true"><use href="#ic-stories"/></svg>
+                  <span><strong>STORIES</strong><small>9:16</small></span>
+                  <i class="radio-mark" aria-hidden="true"><svg><use href="#ic-check"/></svg></i>
+                </button>
+              </div>
+            </fieldset>
+          </section>
+          <section id="framePanel" class="panel" role="tabpanel" aria-labelledby="tab-frame" hidden>
+            <h3>Escolha sua moldura</h3>
+            <p class="panel-note" id="phaseNotice"></p>
+            <div id="availableFrames" class="frames" role="group" aria-label="Molduras disponíveis"></div>
+            <details class="disclosure locked-frames">
+              <summary><svg aria-hidden="true"><use href="#ic-lock"/></svg><strong id="lockedTitle">Molduras de pós-evento</strong><small id="lockedCount">4 bloqueadas</small><svg class="chevron" aria-hidden="true"><use href="#ic-chevron"/></svg></summary>
+              <div class="disclosure-body"><p id="lockedNote"></p><div class="frames" id="unavailableFrames"></div></div>
+            </details>
+          </section>
+          <section id="detailsPanel" class="panel" role="tabpanel" aria-labelledby="tab-details" hidden>
+            <div class="field"><label for="name">Seu nome <small>Opcional</small></label><input id="name" maxlength="28" placeholder="Nome que aparece na foto" autocomplete="given-name" /></div>
+            <div class="field" id="paceField" hidden><label for="pace">Seu pace <small>min/km · opcional</small></label><input id="pace" maxlength="5" placeholder="05:30" aria-describedby="paceHelp" /><small id="paceHelp">Informe os minutos e os segundos por quilômetro.</small></div>
+            <details class="disclosure sticker-section">
+              <summary><svg aria-hidden="true"><use href="#ic-sticker"/></svg><strong>Adesivos</strong><small id="stickerCount">0 de 2</small><svg class="chevron" aria-hidden="true"><use href="#ic-chevron"/></svg></summary>
+              <div class="disclosure-body">
+                <p>Escolha até dois adesivos diferentes para a sua foto.</p>
+                <div class="sticker-sides" role="group" aria-label="Adesivo para editar"><button type="button" data-sticker-side="left" aria-pressed="true">Adesivo 1</button><button type="button" data-sticker-side="right" aria-pressed="false">Adesivo 2</button></div>
+                <div id="sticker-grid" class="sticker-grid" role="group" aria-label="Escolha um adesivo"></div>
+                <div id="stickerAdjustments" hidden>
+                  <div class="sticker-control"><label for="sticker-size">Tamanho <output id="sticker-size-value">100%</output></label><input type="range" id="sticker-size" min="120" max="460" step="1" value="250" disabled /></div>
+                  <div class="sticker-control"><label for="sticker-position">Altura <output id="sticker-position-value">50%</output></label><input type="range" id="sticker-position" min="0" max="100" step="1" value="50" disabled /></div>
+                  <div class="sticker-actions"><button type="button" id="sticker-reset" class="outline" disabled>Restaurar posição</button><a id="sticker-download" class="sticker-download" hidden>Baixar adesivo PNG</a></div>
+                </div>
+                <span class="sr-only" id="stickerMoveHelp">Arraste o adesivo para mover. Use o botão azul do canto para redimensionar ou as setas do teclado.</span>
+                <p id="sticker-feedback" role="status" aria-live="polite"></p>
+              </div>
+            </details>
+            <div class="export-card"><svg aria-hidden="true"><use href="#ic-download"/></svg><div><strong>Arquivo final</strong><small id="exportSize">PNG · 1080 × 1440 px · FEED</small></div></div>
+          </section>
+          <div class="editor-actions" id="editorActions" hidden>
+            <div class="action-row">
+              <button id="back" class="outline" type="button" aria-label="Voltar à etapa anterior" title="Voltar" hidden><svg aria-hidden="true"><use href="#ic-back"/></svg></button>
+              <button id="continue" class="primary" type="button"><span>Escolher moldura</span><svg aria-hidden="true"><use href="#ic-arrow"/></svg></button>
+              <button id="download" class="primary" type="button" hidden disabled><svg aria-hidden="true"><use href="#ic-download"/></svg><span>Salvar foto</span></button>
+              <button id="share" class="outline" type="button" aria-label="Compartilhar foto" title="Compartilhar foto" hidden><svg aria-hidden="true"><use href="#ic-share"/></svg><span>Compartilhar</span></button>
+            </div>
+          </div>
+          <p class="privacy-note"><svg aria-hidden="true"><use href="#ic-shield"/></svg>Sua foto fica neste dispositivo.</p>
+        </section>
+      </div>
+      <footer class="app-footer"><svg aria-hidden="true"><use href="#ic-wifi"/></svg><span id="offlineStatus" class="offline-status" role="status"></span></footer>
+    </main>
+    <p id="status" role="status" aria-live="polite" hidden></p>
+    <p id="connectionStatus" class="connection-status" role="status" hidden></p>
+    <div id="updateNotice" class="update-notice" hidden><span>Nova versão disponível. Salve a foto antes de atualizar.</span><button id="updateApp" type="button">Atualizar</button></div>
+    <dialog id="previewDialog" aria-labelledby="largePreviewTitle">
+      <div class="card-head"><div class="card-heading"><svg aria-hidden="true"><use href="#ic-view"/></svg><h2 id="largePreviewTitle">Prévia ampliada</h2></div><button class="icon-button" id="closePreview" type="button" aria-label="Fechar prévia"><svg aria-hidden="true"><use href="#ic-x"/></svg></button></div>
+      <div id="stageLarge"></div>
+      <div class="enlarged-caption"><span id="largeCaption"></span><button class="outline" id="returnToEditor" type="button">Voltar ao editor</button></div>
+    </dialog>
+    <dialog id="helpDialog" aria-labelledby="helpTitle">
+      <div class="dialog-top"><h2 id="helpTitle">Como usar o estúdio</h2><button id="closeHelp" type="button" class="icon-button" aria-label="Fechar ajuda"><svg aria-hidden="true"><use href="#ic-x"/></svg></button></div>
+      <ol class="help-steps">
+        <li><strong>Escolha a foto e o formato</strong><p>Use FEED para uma publicação em 3:4 ou STORIES para preencher a tela em 9:16. Arraste a foto na prévia e aproxime com dois dedos ou com a roda do mouse.</p></li>
+        <li><strong>Selecione uma moldura</strong><p>Toque nas miniaturas e veja o resultado na prévia. As molduras de pós-evento abrem em 29/11, à meia-noite de Brasília.</p></li>
+        <li><strong>Personalize e salve</strong><p>Em Finalizar, adicione seu nome e até dois adesivos. Toque em Salvar foto para baixar a imagem em PNG.</p></li>
+      </ol>
+      <button id="dismissHelp" class="primary" type="button">Entendi<svg aria-hidden="true"><use href="#ic-check"/></svg></button>
+    </dialog>
+    <dialog id="installDialog" aria-labelledby="installTitle">
+      <div class="dialog-top"><div class="dialog-brand"><img src="icons/runner-192.png" width="44" height="44" alt=""/><span><strong>Meu Corre</strong><small>2ª Corrida Corte · 2026</small></span></div><button class="icon-button" id="closeInstall" aria-label="Fechar orientações"><svg aria-hidden="true"><use href="#ic-x"/></svg></button></div>
+      <h2 id="installTitle">Instalar aplicativo</h2>
+      <div class="platform-picker" role="group" aria-label="Dispositivo para instalar"><button data-install-platform="android" aria-pressed="false">Android</button><button data-install-platform="ios" aria-pressed="false">iPhone / iPad</button><button data-install-platform="desktop" aria-pressed="false">Computador</button></div>
+      <p id="installWarning" class="install-warning" hidden></p>
+      <button id="nativeInstall" class="primary" hidden>Instalar agora</button>
+      <div id="installInstructions"></div>
+      <div class="install-link"><label for="appAddress">Link para abrir em outro dispositivo</label><div><input id="appAddress" type="url" readonly aria-label="Link do app" /><button id="copyAppLink" class="outline">Copiar link</button></div></div>
+      <p id="installFeedback" role="status" aria-live="polite"></p>
+      <button id="dismissInstall" class="dialog-dismiss">Voltar ao estúdio</button>
+    </dialog>
+    <noscript>Ative o JavaScript no navegador para criar sua foto com moldura.</noscript>
+    <script src="schedule.js"></script>
+    <script src="countdown.js"></script>
+    <script src="formats.js"></script>
+    <script src="stickers.js"></script>
+    <script src="app.js"></script>
+    <script src="extras.js"></script>
+  </body>
+</html>

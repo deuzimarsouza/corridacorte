@@ -20,11 +20,11 @@ A instalação depende do navegador e deve ser confirmada pelo usuário. Abrir `
 
 ## Identidade visual
 
-O cabeçalho, o ícone da aba e os ícones de instalação usam a imagem do corredor azul fornecida pelo organizador, com proporções preservadas. O ícone adaptável tem uma margem branca para acomodar os recortes do Android. A marca original do evento permanece nas molduras. Se uma instalação existente continuar exibindo o ícone anterior, remova o app e instale novamente pelo site atualizado.
+O cabeçalho exibe o arquivo original `logo.jpg` do evento. O ícone da aba e os ícones de instalação usam a imagem do corredor azul fornecida pelo organizador, com as proporções preservadas. O ícone adaptável tem uma margem branca para acomodar os recortes do Android. A marca original do evento permanece nas molduras. Se uma instalação existente continuar exibindo o ícone anterior, remova o app e instale novamente pelo site atualizado.
 
 ## Fotos e molduras
 
-Escolha a foto, ajuste o enquadramento, selecione uma moldura e salve em PNG no formato escolhido: 1:1 (1080 × 1080), 3:4 retrato (1080 × 1440) ou 9:16 vertical (1080 × 1920). Ao trocar o formato, o enquadramento é centralizado; ajuste a posição e o zoom novamente se necessário. O nome é opcional. A moldura Meu Pace aceita minutos e segundos (05:30).
+Escolha a foto, ajuste o enquadramento, selecione uma moldura e salve em PNG no formato escolhido: FEED 3:4 (1080 × 1440) ou STORIES 9:16 (1080 × 1920). Ao trocar o formato, o enquadramento é centralizado; ajuste a posição e o zoom novamente se necessário. O nome é opcional. A moldura Meu Pace aceita minutos e segundos (05:30).
 
 São 7 molduras. As 3 de pré-evento funcionam até 28/11/2026 às 23h59:59, horário de Brasília. Em 29/11/2026 às 00h, elas são bloqueadas e as 4 de pós-evento são liberadas. A regra usa o relógio do dispositivo, não é uma restrição protegida no servidor.
 
@@ -32,11 +32,11 @@ As fotos são processadas localmente. O app não armazena as fotos entre sessõe
 
 ## Adesivos
 
-No passo **Finalizar**, escolha **Adesivo 1** ou **Adesivo 2** e uma das dez artes. Não é possível repetir a mesma arte nos dois espaços: a opção já usada fica desabilitada até ser removida ou trocada. Cada adesivo tem tamanho e altura independentes. Ao selecionar um adesivo na prévia, arraste o botão azul ↔ no canto inferior direito para aumentar ou diminuir mantendo a proporção. O tamanho varia de 48% a 184%. Os controles Tamanho e Altura também permitem ajustar a arte em toda a área da foto. Toque e arraste o adesivo diretamente na prévia para qualquer posição da foto; no computador, use o mouse ou as setas do teclado (Shift para passos maiores). O arraste do adesivo não movimenta a foto. O botão **Voltar à posição inicial** restaura sua posição. Ao mudar o formato, a posição relativa é preservada. Use **Sem adesivo** para retirar apenas o adesivo selecionado. Eles acompanham a foto salva nos formatos 1:1, 3:4 e 9:16. O botão **Baixar adesivo PNG** salva o adesivo individual com fundo transparente. Os arquivos estão na pasta `stickers/`.
+No passo **Finalizar**, escolha **Adesivo 1** ou **Adesivo 2** e uma das dez artes. Não é possível repetir a mesma arte nos dois espaços: a opção já usada fica desabilitada até ser removida ou trocada. Cada adesivo tem tamanho e altura independentes. Ao selecionar um adesivo na prévia, arraste o botão azul ↔ no canto inferior direito para aumentar ou diminuir mantendo a proporção. O tamanho varia de 48% a 184%. Os controles Tamanho e Altura também permitem ajustar a arte em toda a área da foto. Toque e arraste o adesivo diretamente na prévia para qualquer posição da foto; no computador, use o mouse ou as setas do teclado (Shift para passos maiores). O arraste do adesivo não movimenta a foto. O botão **Restaurar posição** restaura sua posição. Ao mudar o formato, a posição relativa é preservada. Use **Sem adesivo** para retirar apenas o adesivo selecionado. Eles acompanham a foto salva nos formatos FEED e STORIES. O botão **Baixar adesivo PNG** salva o adesivo individual com fundo transparente. Os arquivos estão na pasta `stickers/`.
 
 ## Publicar o ZIP
 
-Extraia os arquivos e publique todo o conteúdo, mantendo a pasta `icons`, em uma hospedagem estática HTTPS. Não requer Node.js ou build. Os caminhos relativos também funcionam em subpastas, como no GitHub Pages.
+Extraia os arquivos e publique todo o conteúdo, incluindo as pastas `assets/`, `icons/` e `stickers/`, em uma hospedagem estática HTTPS. Não requer Node.js ou build. Os caminhos relativos também funcionam em subpastas, como no GitHub Pages.
 
 O manifesto é `manifest.webmanifest`, a instalação é controlada por `pwa.js` e o cache por `sw.js`. Ao publicar novas alterações, troque a versão da constante CACHE em `sw.js`. A atualização fica aguardando confirmação no app para não descartar a foto durante a edição. O cache guarda somente recursos do app: páginas de autenticação, fotos escolhidas e requisições externas não entram no cache. Cada versão usa seu próprio conjunto de arquivos.
 
@@ -49,3 +49,12 @@ Para executar os testes no repositório: `node --test tests/pwa.test.cjs`.
 Referências técnicas: [instalação de PWAs (MDN)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable), [web apps no iPhone (Apple)](https://support.apple.com/guide/iphone/iphea86e5236/ios).
 
 A contagem regressiva em destaque no topo exibe blocos de dias, horas e minutos, sem segundos. A atualização automática usa o tempo restante até 29/11/2026 às 05h30, no horário de Brasília (08h30 UTC), usando o relógio do dispositivo. No último minuto, mostra “É agora! Falta menos de 1 minuto.”. As animações suaves respeitam a preferência por movimento reduzido. Ao chegar à largada, mostra “A largada chegou! Bom corre!”. Essa contagem é independente da liberação das molduras, que continua às 00h de Brasília.
+
+## Estúdio de molduras
+
+- Em **Foto**, escolha uma imagem ou arraste-a para a prévia. Selecione **FEED** ou **STORIES**.
+- Em **Moldura**, toque em uma miniatura para experimentar o estilo com sua imagem. A foto de exemplo, gerada para demonstrar as molduras, é substituída ao escolher sua foto.
+- No celular, o botão **Ver prévia** amplia a composição. Você pode mover a foto e os adesivos na própria prévia ampliada.
+- Em **Finalizar**, o nome e os adesivos são opcionais. **Salvar foto** baixa o PNG. **Compartilhar** aparece nos navegadores que permitem enviar arquivos pelo menu nativo.
+- O nome digitado pode ser lembrado neste aparelho. As fotos são tratadas na memória durante a edição.
+- As fontes e a imagem de exemplo acompanham o projeto em `assets/`. A licença da fonte Roboto está em `assets/fontes/LICENCA-Roboto.txt`.
